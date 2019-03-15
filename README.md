@@ -49,7 +49,7 @@ fun findAbove18AndNameContains(pattern: String): List<Person> {
     )
 
     criteriaQuery.orderBy(
-        builder.asc(root.get<String>(Person::age.name)),
+        builder.asc(root.get<Int>(Person::age.name)),
         builder.asc(root.get<String>(Person::name.name))
     )
 
