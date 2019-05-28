@@ -57,23 +57,17 @@ open class GenericDaoImpl<T, ID : Serializable>(private val clazz: Class<T>, pro
     @Suppress("UNCHECKED_CAST")
     override fun save(o: T): ID? {
         return try {
-            session.beginTransaction()
             val id = session.save(o) as ID?
-            session.transaction.commit()
             id
         } catch (e: Exception) {
-            session.transaction.rollback()
             throw e
         }
     }
 
     override fun saveOrUpdate(o: T) {
         try {
-            session.transaction.begin()
             session.saveOrUpdate(o)
-            session.transaction.commit()
         } catch (e: Exception) {
-            session.transaction.rollback()
             throw e
         }
     }
@@ -81,11 +75,8 @@ open class GenericDaoImpl<T, ID : Serializable>(private val clazz: Class<T>, pro
 
     override fun delete(o: T) {
         try {
-            session.transaction.begin()
             session.delete(o)
-            session.transaction.commit()
         } catch (e: Exception) {
-            session.transaction.rollback()
             throw e
         }
     }
